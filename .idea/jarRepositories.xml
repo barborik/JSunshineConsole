@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="src/main/resources/freetype-jni_1.0.jar" />
+      <option name="name" value="src/main/resources/freetype-jni_1.0.jar" />
+      <option name="url" value="file://C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="freetype26MT_x86" />
+      <option name="name" value="freetype26MT_x86" />
+      <option name="url" value="file://C:\Users\Owner\IdeaProjects\JSunshineConsole/freetype26MT_x86.dll" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="freetype-jni" />
+      <option name="name" value="freetype-jni" />
+      <option name="url" value="file://C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="com.pvporbit" />
+      <option name="name" value="com.pvporbit" />
+      <option name="url" value="C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="freetype-jni" />
+      <option name="name" value="freetype-jni" />
+      <option name="url" value="C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+      <option name="name" value="C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+      <option name="url" value="file://C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="freetype26MT_x64" />
+      <option name="name" value="freetype26MT_x64" />
+      <option name="url" value="file://C:\Users\Owner\IdeaProjects\JSunshineConsole/freetype26MT_x64.dll" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="com.pvporbit" />
+      <option name="name" value="com.pvporbit" />
+      <option name="url" value="file://C:\Users\Owner\IdeaProjects\JSunshineConsole/src/main/resources/freetype-jni_1.0.jar" />
+    </remote-repository>
+  </component>
+</project>
