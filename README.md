@@ -5,7 +5,7 @@
 
 JSunshineConsole is intended to be very friendly to beginners that just want to put something on the screen (while still being powerful enough for larger ASCII projects). So, here are the very basics:
 
-First, you'll need to add JSunshineConsole to your project and put the font file included with the jar in the same directory.
+First, you'll need to add JSunshineConsole to your project, you can download it [here](https://github.com/Barbo24/JSunshineConsole/releases/).
 ```java
 //Create a window, 37 columns across and 12 rows high.
 //I swapped rows and columns for easier conversion to standard X,Y coord system
