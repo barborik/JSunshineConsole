@@ -5,12 +5,12 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		run console
+		run console();
 		
-		open consolw window
-		and hack mineplex minecraft servr;
+		open consolw window();
+		and hack mineplex minecraft servr();
 		
-		end program and do a csharp versinvvvvvvvvvvvvvvvvvvvv
+		end program and do a csharp versin();
 		
 	}
 
