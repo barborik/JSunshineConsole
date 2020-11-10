@@ -11,8 +11,11 @@ First, you'll need to add JSunshineConsole to your project, you can download it 
 //I swapped rows and columns for easier conversion to standard X,Y coord system
 ConsoleWindow console = new ConsoleWindow(37, 12, "JSunshineConsole");
 
-//Write to the window at column 11, row 5
-console.write(11, 5, "Hello, World!", Color.CYAN);
+//Update the window until its closed:
+while (console.windowUpdate()) {
+  //Write to the window at column 11, row 5
+  console.write(11, 5, "Hello, World!", Color.CYAN);
+}
 ```
 
 That's all you need to get off the ground!
