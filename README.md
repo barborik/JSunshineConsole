@@ -19,3 +19,14 @@ while (console.windowUpdate()) {
 ```
 
 That's all you need to get off the ground!
+
+&nbsp;
+
+#### Other features
+
+##### Background colors:
+
+```java
+// Draw a health pack powerup by writing a red '+' with a white background.
+console.write(12, 5, '+', Color.RED, Color.WHITE);
+```

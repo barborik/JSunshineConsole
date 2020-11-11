@@ -1,7 +1,6 @@
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWKeyCallback;
-import org.lwjgl.glfw.GLFWKeyCallbackI;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.stb.STBImage;
@@ -24,6 +23,10 @@ public class ConsoleWindow {
     IntBuffer bmpHeight;
     IntBuffer comp;
 
+    public long getWindow() {
+        return window;
+    }
+
     public boolean windowUpdate() {
         GLFW.glfwPollEvents();
         GLFW.glfwSwapBuffers(window);
@@ -31,15 +34,41 @@ public class ConsoleWindow {
         return !GLFW.glfwWindowShouldClose(window);
     }
 
-    public void write(int column, int row, String text, Color color) {
+    public void write(int column, int row, String text, Color color, Color background) {
         for (int i = 0; i < text.length(); i++) {
-            GL11.glPixelStorei(GL11.GL_UNPACK_ROW_LENGTH, bmpWidth.get());
-            bmpWidth.rewind();
+            byte[] bytes = new byte[data.limit()];
+            for (int j = 0; j < bytes.length; j += 4) {
+                byte red = data.get(j);
+                byte green = data.get(j + 1);
+                byte blue = data.get(j + 2);
+                if (red == 0) {
+                    red = (byte) background.getRed();
+                } else if (red == -1) {
+                    red = (byte) color.getRed();
+                }
+                if (green == 0) {
+                    green = (byte) background.getGreen();
+                } else if (green == -1) {
+                    green = (byte) color.getGreen();
+                }
+                if (blue == 0) {
+                    blue = (byte) background.getBlue();
+                } else if (blue == -1) {
+                    blue = (byte) color.getBlue();
+                }
+                bytes[j] = red;
+                bytes[j + 1] = green;
+                bytes[j + 2] = blue;
+                bytes[j + 3] = data.get(j + 3);
+            }
+            ByteBuffer data2 = ByteBuffer.allocateDirect(bytes.length);
+            data2.put(bytes);
+            data2.flip();
+
             GL11.glPixelStorei(GL11.GL_UNPACK_SKIP_PIXELS, 8 * text.charAt(i));
-            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, 8, 12, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data);
+            GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, 8, 12, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, data2);
 
             GL11.glBegin(GL11.GL_QUADS);
-            GL11.glColor3f((1f / 255) * color.getRed(), (1f / 255) * color.getGreen(), (1f / 255) * color.getBlue());
             GL11.glTexCoord2f(0, 0);
             GL11.glVertex2f(column * 8 + i * 8, row * 12);
 
@@ -52,7 +81,12 @@ public class ConsoleWindow {
             GL11.glTexCoord2f(0, 1);
             GL11.glVertex2f(column * 8 + i * 8, row * 12 + 12);
             GL11.glEnd();
+
         }
+    }
+
+    public void write(int column, int row, String text, Color color) {
+        this.write(column, row, text, color, Color.BLACK);
     }
 
     public void write(int column, int row, String text) {
@@ -117,5 +151,8 @@ public class ConsoleWindow {
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
         GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
         GL11.glOrtho(0, columns * 8, rows * 12, 0, 1, -1);
+
+        GL11.glPixelStorei(GL11.GL_UNPACK_ROW_LENGTH, bmpWidth.get());
+        bmpWidth.rewind();
     }
 }
