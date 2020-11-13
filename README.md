@@ -27,6 +27,39 @@ That's all you need to get off the ground!
 ##### Background colors:
 
 ```java
-// Draw a health pack powerup by writing a red '+' with a white background.
-console.write(12, 5, '+', Color.RED, Color.WHITE);
+//Draw a health pack powerup by writing a red '+' with a white background.
+console.write(12, 5, "+", Color.RED, Color.WHITE);
+```
+
+##### Checking what's onscreen:
+```java
+//Retrieve all the information about column 4, row 0:
+char ch = console.getChar(4, 0);
+Color color = console.getColor(0, 4);
+Color bgcolor = console.getBackgroundColor(0, 4);
+```
+
+##### Getting key that's pressed:
+```java
+switch (console.getKeyCode()) {
+    case GLFW.GLFW_KEY_W:
+        //code
+        break;
+    case GLFW.GLFW_KEY_S:
+        //more code
+        break;
+}
+```
+##### Checking for new keypresses:
+```java
+if (console.keyPressed()) {
+  //code
+}
+```
+##### Checking whether a key is currently being held down:
+```java
+//Check whether either Control key is currently being held:
+if (console.keyIsDown(GLFW.GLFW_KEY_LEFT_CONTROL) || console.keyIsDown(GLFW.GLFW_KEY_LEFT_CONTROL)) {
+	//code
+}
 ```

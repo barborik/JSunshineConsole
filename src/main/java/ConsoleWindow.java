@@ -16,18 +16,53 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class ConsoleWindow {
+    int columns;
+    int rows;
     private long window;
-    private int keyPressedCode = 0;
     ByteBuffer data;
     IntBuffer bmpWidth;
     IntBuffer bmpHeight;
     IntBuffer comp;
+    char[] chars;
+    Color[] colors;
+    Color[] bgcolors;
+    int keyPressedCode;
+
+    public int getColumns() {
+        return this.columns;
+    }
+
+    public int getRows() {
+        return this.rows;
+    }
 
     public long getWindow() {
         return window;
     }
 
+    public char getChar(int column, int row) {
+        return chars[row * this.columns + column];
+    }
+
+    public Color getColor(int column, int row) {
+        return colors[row * this.columns + column];
+    }
+
+    public Color getBackgroundColor(int column, int row) {
+        return bgcolors[row * this.columns + column];
+    }
+
     public boolean windowUpdate() {
+        chars = new char[chars.length];
+        keyPressedCode = 0;
+        GLFW.glfwSetKeyCallback(window, new GLFWKeyCallback() {
+            @Override
+            public void invoke(long window, int key, int scancode, int action, int mods) {
+                if (action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT) {
+                    keyPressedCode = key;
+                }
+            }
+        });
         GLFW.glfwPollEvents();
         GLFW.glfwSwapBuffers(window);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -36,24 +71,24 @@ public class ConsoleWindow {
 
     public void write(int column, int row, String text, Color color, Color background) {
         for (int i = 0; i < text.length(); i++) {
+            try {
+                chars[row * this.columns + column + i] = text.charAt(i);
+                colors[row * this.columns + column + i] = color;
+                bgcolors[row * this.columns + column + i] = background;
+            } catch (Exception ignored) {
+            }
             byte[] bytes = new byte[data.limit()];
             for (int j = 0; j < bytes.length; j += 4) {
                 byte red = data.get(j);
                 byte green = data.get(j + 1);
                 byte blue = data.get(j + 2);
-                if (red == 0) {
+                if (red == 0 && green == 0 && blue == 0) {
                     red = (byte) background.getRed();
-                } else if (red == -1) {
-                    red = (byte) color.getRed();
-                }
-                if (green == 0) {
                     green = (byte) background.getGreen();
-                } else if (green == -1) {
-                    green = (byte) color.getGreen();
-                }
-                if (blue == 0) {
                     blue = (byte) background.getBlue();
-                } else if (blue == -1) {
+                } else {
+                    red = (byte) color.getRed();
+                    green = (byte) color.getGreen();
                     blue = (byte) color.getBlue();
                 }
                 bytes[j] = red;
@@ -61,6 +96,7 @@ public class ConsoleWindow {
                 bytes[j + 2] = blue;
                 bytes[j + 3] = data.get(j + 3);
             }
+
             ByteBuffer data2 = ByteBuffer.allocateDirect(bytes.length);
             data2.put(bytes);
             data2.flip();
@@ -81,7 +117,6 @@ public class ConsoleWindow {
             GL11.glTexCoord2f(0, 1);
             GL11.glVertex2f(column * 8 + i * 8, row * 12 + 12);
             GL11.glEnd();
-
         }
     }
 
@@ -94,34 +129,23 @@ public class ConsoleWindow {
     }
 
     public boolean keyIsDown(int keyCode) {
-        GLFW.glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if (action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT) {
-                keyPressedCode = key;
-            }
-        });
-
-        int tempKeyCode = keyPressedCode;
-        keyPressedCode = 0;
-        return tempKeyCode == keyCode;
+        return keyPressedCode == keyCode;
     }
 
     public int getKeyCode() {
-        GLFW.glfwSetKeyCallback(window, new GLFWKeyCallback() {
-            @Override
-            public void invoke(long window, int key, int scancode, int action, int mods) {
-                if (action == GLFW.GLFW_PRESS || action == GLFW.GLFW_REPEAT) {
-                    keyPressedCode = key;
-                }
-            }
-        });
+        return keyPressedCode;
+    }
 
-        int tempKeyCode = keyPressedCode;
-        keyPressedCode = 0;
-        return tempKeyCode;
+    public boolean keyPressed() {
+        return keyPressedCode != 0;
     }
 
     public ConsoleWindow(int columns, int rows, String title) {
-
+        this.columns = columns;
+        this.rows = rows;
+        chars = new char[columns * rows];
+        colors = new Color[columns * rows];
+        bgcolors = new Color[columns * rows];
         if (!GLFW.glfwInit()) {
             System.err.println("ERROR: GLFW not initialized");
             return;
@@ -134,6 +158,7 @@ public class ConsoleWindow {
         GLFW.glfwMakeContextCurrent(window);
         GL.createCapabilities();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GLFW.glfwSwapInterval(0);
 
         bmpWidth = BufferUtils.createIntBuffer(1);
         bmpHeight = BufferUtils.createIntBuffer(1);
