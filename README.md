@@ -35,8 +35,8 @@ console.write(12, 5, "+", Color.RED, Color.WHITE);
 ```java
 //Retrieve all the information about column 4, row 0:
 char ch = console.getChar(4, 0);
-Color color = console.getColor(0, 4);
-Color bgcolor = console.getBackgroundColor(0, 4);
+Color color = console.getColor(4, 0);
+Color bgcolor = console.getBackgroundColor(4, 0);
 ```
 
 ##### Getting key that's pressed:
