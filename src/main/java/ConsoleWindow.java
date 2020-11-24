@@ -179,5 +179,6 @@ public class ConsoleWindow {
 
         GL11.glPixelStorei(GL11.GL_UNPACK_ROW_LENGTH, bmpWidth.get());
         bmpWidth.rewind();
+        //pukysekk je gádžo
     }
 }
